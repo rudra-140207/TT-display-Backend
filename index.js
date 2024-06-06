@@ -9,13 +9,17 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin : "https://kiet-en-tt.onrender.com",
+    methods : ['POST','GET']
+}));
 app.use(express.json());
 
 app.use("/admin",AdminRouter);
 
 const port = process.env.PORT;
-mongoose.connect("mongodb://127.0.0.1:27017").then(()=>{
+
+mongoose.connect(process.env.MONGO_URL).then(()=>{
     app.listen(port,()=>{
         console.log(`Oh no its working on ${port} .`);
     })
