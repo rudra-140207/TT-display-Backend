@@ -8,7 +8,13 @@ const fileSchema = new mongoose.Schema({
   },
   url: {
     type: String,
-    required: true,
+    // required: true,
+  },
+  secondUrl: {
+    type: String,
+  },
+  message: {
+    type: String,
   },
 });
 

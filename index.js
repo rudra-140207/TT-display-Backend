@@ -11,6 +11,7 @@ const app = express();
 
 app.use(cors({
     origin : "https://kiet-en-tt.onrender.com",
+    // origin : "http://localhost:3000",
     methods : ['POST','GET']
 }));
 app.use(express.json());

@@ -1,23 +1,30 @@
 import File from "../models/files.js";
+
 export const updateFile = async (req, res) => {
   const { classID } = req.params;
-  const { url } = req.body;
-
-  if (!url) {
-    return res.status(400).json({ error: "URL is required" });
-  }
+  const { url, secondUrl, message } = req.body;
 
   try {
-
     let updatedFile = await File.findOne({ classID });
 
     if (!updatedFile) {
-      updatedFile = new File({ classID, url });
-      await updatedFile.save();
-    } else {
-      updatedFile.url = url;
-      await updatedFile.save();
+      updatedFile = new File({ classID });
     }
+
+    // Update only if the field is present in req.body and not empty
+    if (url !== undefined && url !== "") {
+      updatedFile.url = url;
+    }
+
+    if (secondUrl !== undefined && secondUrl !== "") {
+      updatedFile.secondUrl = secondUrl;
+    }
+
+    if (message !== undefined && message !== "") {
+      updatedFile.message = message;
+    }
+
+    await updatedFile.save();
 
     res.status(200).json(updatedFile);
   } catch (error) {
